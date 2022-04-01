@@ -1,37 +1,52 @@
 package com.bytestream.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bytestream.entity.CovidData;
+import com.bytestream.service.CovidService;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/v1")
 public class CovidController 
 {
-	@CrossOrigin("*")
+	@Autowired
+	CovidService service;
+	
 	@GetMapping("/getCovidData")
 	public List<CovidData> getCovidData()
 	{
-	     CovidData data = new CovidData(100, 50, "New york", 200);
-	     CovidData data1 = new CovidData(200, 150, "London", 300);
-	     CovidData data2 = new CovidData(300, 550, "Rome", 500);
-	     CovidData data3 = new CovidData(400, 750, "Geneva", 150);
-	     
-	     List<CovidData> list = new ArrayList();
-	     list.add(data);
-	     list.add(data1);
-	     list.add(data2);
-	     list.add(data3);
-	     
-	     return list;
-	     
-	     
+	    return service.getCovidData();
 	}
+	
+	@GetMapping("/getCovidBycity/{name}")
+	public CovidData getCovidDataByCity(@PathVariable("name") String name)
+	{
+	    return service.getCovidDataByCity(name);
+	}
+	
+	@PostMapping("/addCovid")
+	public void addCovidRecord(@RequestBody CovidData data)
+	{
+		service.addCovidRecord(data);
+	}
+	
+	@DeleteMapping("/delete/{name}")
+	public void deleteCOvidData(@PathVariable("name") String name)
+	{
+		service.deleteCovidRecord(name);
+	}
+	
+	
 
 }
