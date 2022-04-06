@@ -1,7 +1,15 @@
 package com.bytestream.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "covid")
 public class CovidData 
 {
+	
+	@Id
 	private long deaths;
 	private long hospitalized;
 	private String city;
@@ -26,6 +34,9 @@ public class CovidData
 		this.hospitalized = hospitalized;
 		this.city = city;
 		this.curedPatients = curedPatients;
+	}
+	
+	public CovidData() {
 	}
 	
 	
