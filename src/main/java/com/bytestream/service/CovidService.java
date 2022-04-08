@@ -1,12 +1,9 @@
 package com.bytestream.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.bytestream.dao.CovidDao;
 import com.bytestream.entity.CovidData;
 
@@ -44,8 +41,26 @@ public class CovidService
 		
 	}
 	
-	public void deleteCovidRecord(String name)
+	public void deleteCovidRecord(long name)
 	{
+		dao.deleteById(name);
+		
+	}
+
+	public void updateCovidRecord(CovidData data) {
+		
+		List<CovidData> list= dao.findAll(); 
+		for(CovidData covid : list)
+		{
+			if(covid.getDeaths() == data.getDeaths())
+			{
+				covid.setCuredPatients(data.getCuredPatients());
+				covid.setHospitalized(data.getHospitalized());
+				dao.save(covid);
+				break;
+			}
+			
+		}
 		
 	}
 	

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import com.bytestream.service.CovidService;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/v1")
+//CRUD Create/Read/Update/Delete/Select
 public class CovidController 
 {
 	@Autowired
@@ -42,9 +44,15 @@ public class CovidController
 	}
 	
 	@DeleteMapping("/delete/{name}")
-	public void deleteCOvidData(@PathVariable("name") String name)
+	public void deleteCOvidData(@PathVariable("name") long name)
 	{
 		service.deleteCovidRecord(name);
+	}
+	
+	@PutMapping("/update")
+	public void updateCovidData(@RequestBody CovidData data)
+	{
+		service.updateCovidRecord(data);
 	}
 	
 	
